@@ -39,8 +39,8 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Transactional
     public DepartmentDto addDepartment(final DepartmentDto departmentDto) {
         final Department department = toDepartment(departmentDto);
-        departmentRepository.save(department);
-        return fromDepartment(department);
+        return fromDepartment(departmentRepository.save(department));
+
     }
 
     @Override

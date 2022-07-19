@@ -7,3 +7,9 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+
+camel:
+  component:
+    servlet:
+      mapping:
+        context-path: /api/v1/*

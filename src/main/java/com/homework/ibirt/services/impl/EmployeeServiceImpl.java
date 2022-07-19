@@ -45,8 +45,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeDto addEmployee(final EmployeeDto employeeDto) {
         final Employee employee = toEmployee(employeeDto);
         employee.setDepartment(searchForDepartment(employeeDto));
-        employeeRepository.save(employee);
-        return fromEmployee(employee);
+        return fromEmployee(employeeRepository.save(employee));
     }
 
     @Override

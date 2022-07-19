@@ -33,7 +33,7 @@ public class Employee extends BaseEntity {
     @Column(name = "last_name")
     private String lastName;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "department_id")
     private Department department;
 

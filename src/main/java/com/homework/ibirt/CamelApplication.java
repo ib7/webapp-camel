@@ -6,9 +6,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
 @EnableSwagger2
-public class WebappApplication {
+public class CamelApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(WebappApplication.class, args);
+    public static void main(String[] args) throws InterruptedException {
+        SpringApplication.run(CamelApplication.class, args);
     }
 }

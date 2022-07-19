@@ -1,8 +1,10 @@
 package com.homework.ibirt.dto;
 
 import com.homework.ibirt.jpa.models.Employee;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.Email;
@@ -18,6 +20,8 @@ import static java.util.Objects.nonNull;
 @Data
 @Builder
 @Validated
+@NoArgsConstructor
+@AllArgsConstructor
 public class EmployeeDto {
     private UUID id;
 

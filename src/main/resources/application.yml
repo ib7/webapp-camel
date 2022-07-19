@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/webapp_db
+    username: postgres
+    password: 44311
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher

@@ -1,0 +1,210 @@
+openapi: 3.0.1
+info:
+  description: "This is a first version of my Webapp homework OpenAPI documentation"
+  version: "1.0.0"
+  title: "Webapp OpenAPI"
+  contact:
+    email: "birt7@yandex.ru"
+tags:
+  - name: "employee"
+    description: "Everything about an employee"
+  - name: "department"
+    description: "Everything about the department in which the employee works"
+servers:
+- url: http://localhost:8080/api/v1
+  description: "Server base url"
+paths:
+  /departments/{id}:
+    get:
+      tags:
+        - "department"
+      summary: "Find department by ID"
+      description: "Returns a single department"
+      operationId: "getDepartmentById"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of department to return"
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        "200":
+          description: "successful operation"
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DepartmentDto'
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+            description: "Department not found"
+    put:
+      tags:
+        - "department"
+      summary: "Update an existing Department by it's id"
+      description: "Id value should be provided as uuid in string type"
+      operationId: "updateDepartment"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: "DepartmentDto"
+        in: "query"
+        description: "Department object that needs to be added to the store"
+        required: true
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/DepartmentDto'
+      responses:
+        "200":
+          description: "successful operation"
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DepartmentDto'
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+            description: "Department not found"
+  /departments:
+    get:
+      tags:
+        - "department"
+      summary: "Find all departments"
+      description: "Returns a list of departments"
+      operationId: "getAllDepartments"
+      responses:
+        "200":
+          description: "successful operation"
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DepartmentDto'
+    post:
+      tags:
+        - "department"
+        summary: "Add a new department to the database"
+        description: ""
+        operationId: "addDepartment"
+      parameters:
+        - name: "DepartmentDto"
+          in: "query"
+          description: "Department object that needs to be added to the database"
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/DepartmentDto'
+      responses:
+        "200":
+          description: "successful operation"
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DepartmentDto'
+  /employees:
+    get:
+      tags:
+        - "employee"
+      summary: "Find all employees"
+      description: "Returns a list of employees"
+      operationId: "getAllEmployees"
+      responses:
+        "200":
+          description: "successful operation"
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EmployeeDto'
+    post:
+      tags:
+        - "employee"
+        summary: "Add a new employee to the database"
+        description: ""
+        operationId: "addEmployee"
+      parameters:
+        - name: "EmployeeDto"
+          in: "query"
+          description: "Employee object that needs to be added to the database"
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/EmployeeDto'
+      responses:
+        "200":
+          description: "successful operation"
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/EmployeeDto'
+  /employees/{id}:
+    get:
+      tags:
+        - "employee"
+      summary: "Find employee by ID"
+      description: "Returns a single employee"
+      operationId: "getEmployeeById"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of employee to return"
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: "successful operation"
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/EmployeeDto'
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Employee not found"
+    put:
+      tags:
+        - "employee"
+      summary: "Update an existing Employee by it's id"
+      description: "Id value should be provided as uuid in string type"
+      operationId: "updateEmployee"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: "EmployeeDto"
+          in: "query"
+          description: "Employee object that needs to be added to the store"
+          required: true
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/EmployeeDto'
+      responses:
+        "200":
+          description: "successful operation"
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/EmployeeDto'
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Employee not found"

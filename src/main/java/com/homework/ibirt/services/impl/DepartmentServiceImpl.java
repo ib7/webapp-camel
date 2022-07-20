@@ -6,41 +6,45 @@ import com.homework.ibirt.jpa.models.Department;
 import com.homework.ibirt.jpa.repositories.DepartmentRepository;
 import com.homework.ibirt.services.DepartmentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import static com.homework.ibirt.dto.DepartmentDto.*;
 import static java.util.Objects.nonNull;
-import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor
 public class DepartmentServiceImpl implements DepartmentService {
 
     private final DepartmentRepository departmentRepository;
+    private final ConversionService conversionService;
 
     @Override
     public List<DepartmentDto> getAllDepartments() {
-        return departmentRepository.findAll()
-                .stream()
-                .map(DepartmentDto::fromDepartment)
-                .collect(toList());
+        List<Department> departments = departmentRepository.findAll();
+        List<DepartmentDto> departmentDtoList = new ArrayList<>();
+
+        for (Department dep : departments) {
+            departmentDtoList.add(conversionService.convert(dep, DepartmentDto.class));
+        }
+
+        return departmentDtoList;
     }
 
     @Override
     public DepartmentDto getDepartment(final UUID id) {
-        return fromDepartment(getDepartmentInternally(id));
-        }
+        return conversionService.convert(getDepartmentInternally(id), DepartmentDto.class);
+    }
 
     @Override
     @Transactional
     public DepartmentDto addDepartment(final DepartmentDto departmentDto) {
-        final Department department = toDepartment(departmentDto);
-        return fromDepartment(departmentRepository.save(department));
-
+        final Department department = conversionService.convert(departmentDto, Department.class);
+        return conversionService.convert(departmentRepository.save(department), DepartmentDto.class);
     }
 
     @Override
@@ -48,13 +52,13 @@ public class DepartmentServiceImpl implements DepartmentService {
     public DepartmentDto updateDepartment(final UUID id, final DepartmentDto departmentDto) {
         final Department department = getDepartmentInternally(id);
 
-        if (nonNull(departmentDto.getName())){
+        if (nonNull(departmentDto.getName())) {
             department.setName(departmentDto.getName());
         }
-        if (nonNull(departmentDto.getLocation())){
+        if (nonNull(departmentDto.getLocation())) {
             department.setLocation(departmentDto.getLocation());
         }
-        return fromDepartment(department);
+        return conversionService.convert(department, DepartmentDto.class);
     }
 
     private Department getDepartmentInternally(final UUID id) {

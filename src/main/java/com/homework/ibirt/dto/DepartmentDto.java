@@ -1,6 +1,5 @@
 package com.homework.ibirt.dto;
 
-import com.homework.ibirt.jpa.models.Department;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,20 +22,4 @@ public class DepartmentDto {
 
     @NotBlank(message = "Department location should not be empty/blank/null")
     private String location;
-
-    public static DepartmentDto fromDepartment(final Department department) {
-        return DepartmentDto
-                .builder()
-                .id(department.getId())
-                .name(department.getName())
-                .location(department.getLocation())
-                .build();
-    }
-
-    public static Department toDepartment(final DepartmentDto departmentDto) {
-        return Department.builder()
-                .name(departmentDto.getName())
-                .location(departmentDto.getLocation())
-                .build();
-    }
 }
